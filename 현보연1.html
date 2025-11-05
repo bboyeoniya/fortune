@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>오늘의 운세 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --pink:#ff4f9a;
+    --gold:#ffd36e;
+    --text:#222;
+  }
+  *{box-sizing:border-box;}
+  body {
+    margin:0;
+    font-family:'Poor Story',cursive;
+    text-align:center;
+    color:#ff4f9a;
+    min-height:100vh;
+    /*그라데이션 배경*/
+    background: linear-gradient(180deg,#fff6fb 0%, #fff0e0 55%, #ffe5cf 100%);
+    position:relative;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(circle at 70% 20%, rgba(255,120,170,.25), transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(255,220,120,.25), transparent 60%);
+    filter: blur(40px);
+    z-index:0;
+  }
+
+  /* 헤더 푸터 */
+  header,footer{
+    background:rgba(255,255,255,.8);
+    padding:12px;
+    border-top:1px solid var(--gold);
+    border-bottom:1px solid var(--gold);
+    position:relative; z-index:1;
+  }
+  /* 제목 */
+  h1{ color:var(--pink); margin:8px 0; font-size:3rem; }
+  nav a{
+    display:inline-block;
+    margin:0 6px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid transparent;
+    text-decoration:none;
+    color:#a35d00;
+  }
+  nav a:hover{ background:#fff3fa; border-color:var(--gold); }
+
+  /* 메인 내용 */
+  main{ padding:20px; position:relative; z-index:1; }
+  section{
+    background:#fff;
+    border:1px solid var(--gold);
+    border-radius:14px;
+    max-width:700px;
+    margin:16px auto;
+    padding:14px;
+  }
+  /* 오디오 박스 */
+  #audio{ background:rgba(255,255,255,.7); }
+  .media-title{ color:var(--pink); font-weight:700; margin-bottom:8px; }
+
+  /* 폼 스타일 */
+  form{
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:12px 0;
+  }
+  input,select,button{
+    font-family:'Poor Story',cursive;
+    padding:8px 10px;
+    border:1px solid var(--gold);
+    border-radius:8px;
+  }
+  button{
+    background:var(--pink); color:#fff; border:none; cursor:pointer;
+  }
+  /* 운세 결과의 배지 */
+  .badges{ display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin:8px 0; }
+  .badge{
+    background:#fffbe6; border:1px solid var(--gold);
+    border-radius:999px; padding:6px 10px; color:#7a5200;
+  }
+  /* 결과 박스 */
+  #result .box{
+    background:#fff7fb;
+    border:1px solid var(--gold);
+    border-radius:10px;
+    padding:8px; margin:6px auto; max-width:550px;
+  }
+  /* 미디어 공통 */
+  img,audio{ width:100%; max-width:700px; border-radius:10px; border:1px solid var(--gold); }
+
+  /* 플레이리스트 스타일 */
+  #songs ul{ list-style:none; padding:0; margin:0; }
+  #songs li{ background:#fff7fb; margin:6px 0; border-radius:8px; padding:8px; }
+  #songs a{ text-decoration:none; color:#a35d00; font-weight:700; }
+  figure{ margin:0; }
+  figcaption{ font-size:1.3rem; color:#7a5200; margin-top:4px; }
+  /* 🎥 영상 썸네일에 재생(세모) 버튼 */
+.video-thumb {
+  position: relative;
+  display: inline-block;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.video-thumb:hover {
+  transform: scale(1.02);
+}
+/* 썸네일 이미지 */
+.video-thumb img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--gold);
+}
+/* ▶ 세모 버튼 중앙 배치 */
+.play-button {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 79, 154, 0.8);
+  background: rgba(255, 79, 154, 0.6);
+  width: 80px; height: 80px;
+  line-height: 80px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+</style>
+</head>
+<body>
+  <header>
+    <h1>🔮 오늘의 운세 🔮</h1>
+    <nav>
+      <!--하이퍼링크-->
+      <a href="#audio">음악</a>
+      <a href="#video">영상</a>
+      <a href="#form">운세 보기</a>
+      <a href="#songs">플레이리스트</a>
+      <a href="#zodiac2026">별자리표</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 미디어(음악) 삽입 -->
+    <section id="audio">
+      <p class="media-title">🎵 이 노래 들으며 운세 보기 - 해가 될까</p>
+      <audio controls>
+        <source src="해가 될까.mp3" type="audio/mpeg">
+      </audio>
+    </section>
+    <section id="form">
+      <h2>💖 이름과 생일로 알아보는 오늘의 운세 💖</h2>
+      <form id="fortuneForm">
+        <input type="text" id="name" placeholder="이름" required />
+        <input type="text" id="birth" placeholder="생년월일 (예: 2005-02-11)" required />
+        <select id="hour" required>
+          <option value="">태어난 시</option>
+          <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
+          <option>10</option><option>11</option><option>12</option><option>13</option><option>14</option>
+          <option>15</option><option>16</option><option>17</option><option>18</option><option>19</option>
+          <option>20</option><option>21</option><option>22</option><option>23</option>
+        </select>
+        <button type="submit">운세 보기</button>
+      </form>
+      <div id="result"></div>
+      
+      <!-- TABLE 태그 사용 (띠별 행운색상표) -->
+      <h3 style="margin-top:20px;">🎨 12띠별 행운의 색상표</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:1.1rem;text-align:center;">
+        <thead style="background:#fff0f6;">
+          <tr>
+            <th style="border:1px solid var(--gold);padding:8px;">띠</th>
+            <th style="border:1px solid var(--gold);padding:8px;">행운의 색</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">쥐띠</td><td style="border:1px solid var(--gold);padding:8px;">💙 파란색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">소띠</td><td style="border:1px solid var(--gold);padding:8px;">🤍 아이보리</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">호랑이띠</td><td style="border:1px solid var(--gold);padding:8px;">💛 금색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">토끼띠</td><td style="border:1px solid var(--gold);padding:8px;">💜 연보라색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">용띠</td><td style="border:1px solid var(--gold);padding:8px;">❤️ 빨간색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">뱀띠</td><td style="border:1px solid var(--gold);padding:8px;">💚 초록색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">말띠</td><td style="border:1px solid var(--gold);padding:8px;">🧡 주황색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">양띠</td><td style="border:1px solid var(--gold);padding:8px;">🌸 핑크색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">원숭이띠</td><td style="border:1px solid var(--gold);padding:8px;">💛 노란색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">닭띠</td><td style="border:1px solid var(--gold);padding:8px;">⚪ 흰색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">개띠</td><td style="border:1px solid var(--gold);padding:8px;">🩵 하늘색</td></tr>
+          <tr><td style="border:1px solid var(--gold);padding:8px;">돼지띠</td><td style="border:1px solid var(--gold);padding:8px;">💗 연분홍색</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 유튜브 영상 -->
+    <section id="video">
+  <p class="media-title" style="font-size:1.8rem;">🎬 <b>운세 상승 주파수</b></p>
+  
+  <!-- 썸네일 + 세모버튼 -->
+  <a href="https://youtu.be/ueKHEzpz9gA" target="_blank" class="video-thumb">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgcmvRr41Mg9GMwsv1ojB_Kfz7P6_cDyc-ug&s" alt="운세 상승 주파수 영상 썸네일">
+    <div class="play-button">▶</div>
+  </a>
+</section>
+    <section id="songs">
+      <h2>🎧 추천 플레이리스트</h2>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=O0g-Etfgm84" target="_blank">🎧 출근중이라면? - 월요일 출근길 ☀️</a></li>
+        <li><a href="https://www.youtube.com/watch?v=ir4g7-DZG9w" target="_blank">🎧 등교중이라면? - 몽글몽글 학창시절 🌈</a></li>
+        <li><a href="https://www.youtube.com/watch?v=B_xPmPb41xc" target="_blank">🎧 화장중이라면? - 넌 뭘해도 예쁘니까 화장하지마 💕</a></li>
+        <li><a href="https://www.youtube.com/watch?v=Sf1vGR98D3s" target="_blank">🎧 짝사랑 중이라면? - 이루어질지도 몰라 💘</a></li>
+        <li><a href="https://www.youtube.com/watch?v=j7DxdAl9fOg" target="_blank">🎧 간절히 바라는게 있다면? - 이뤄질거야 💫</a></li>
+      </ul>
+    </section>
+
+    <!-- 그림(이미지) 삽입 -->
+<section id="zodiac2026">
+  <h2>🖼 2026 별자리별 운세</h2>
+  <figure>
+    <a href="qufwkfl.png" target="_blank">
+      <img src="qufwkfl.png" alt="별자리 운세"
+           style="max-width:700px; border:1px solid #ffd36e; border-radius:12px;">
+    </a>
+    <figcaption>클릭하면 크게 볼 수 있어요!</figcaption>
+  </figure>
+</section>
+
+  </main>
+
+  <footer>© 2025 Duksung DataScience 보연이의 오늘의 운세</footer>
+  <script>
+    const LOVE=["💕 설렘이 다가오는 하루!","💖 감정이 솔직해질수록 좋은 결과!","💞 과거의 인연이 다시 올 수도!"];
+    const STUDY=["📚 집중력 최고!","🧠 새로운 아이디어가 떠올라요.","💡 오늘은 메모가 행운의 열쇠!"];
+    const MONEY=["💰 예상치 못한 행운!","💸 절약이 복을 부른다.","🎁 선물 받을 수도 있어요."];
+    const TOTAL=["☀️ 기분 좋은 하루 시작!","🌈 자신감 있게!","☁️ 잠시 쉬어가도 좋아요."];
+
+    /* 띠 계산 */
+    function zodiac(y){const a=['원숭이','닭','개','돼지','쥐','소','호랑이','토끼','용','뱀','말','양'];return a[y%12];}
+    /* 별자리 계산 함수 */
+    function star(m,d){
+      if((m==1&&d>=20)||(m==2&&d<=18))return'물병자리';
+      if((m==2&&d>=19)||(m==3&&d<=20))return'물고기자리';
+      if((m==3&&d>=21)||(m==4&&d<=19))return'양자리';
+      if((m==4&&d>=20)||(m==5&&d<=20))return'황소자리';
+      if((m==5&&d>=21)||(m==6&&d<=20))return'쌍둥이자리';
+      if((m==6&&d>=21)||(m==7&&d<=22))return'게자리';
+      if((m==7&&d>=23)||(m==8&&d<=22))return'사자자리';
+      if((m==8&&d>=23)||(m==9&&d<=22))return'처녀자리';
+      if((m==9&&d>=23)||(m==10&&d<=22))return'천칭자리';
+      if((m==10&&d>=23)||(m==11&&d<=21))return'전갈자리';
+      if((m==11&&d>=22)||(m==12&&d<=21))return'사수자리';
+      return'염소자리';
+    }
+    function seed(s){let n=0;for(let i of s)n+=i.charCodeAt(0);return n;}
+    function pick(a,s,p){return a[(s+p)%a.length];}
+
+    /* 결과 표시 */
+    document.getElementById('fortuneForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const n=document.getElementById('name').value;
+      const b=document.getElementById('birth').value;
+      const h=document.getElementById('hour').value;
+      const [yy,mm,dd]=b.split('-').map(v=>parseInt(v));
+      const s=seed(n+b+h);
+      const today=new Date().toISOString().slice(0,10);
+      const out=`
+        <h3>${n}님의 ${today} 운세</h3>
+        <div class="badges">
+          <div class="badge">🐾 띠: ${zodiac(yy)}</div>
+          <div class="badge">✨ 별자리: ${star(mm,dd)}</div>
+          <div class="badge">🕐 태어난 시: ${h}시</div>
+        </div>
+        <div class="box">${pick(LOVE,s,1)}</div>
+        <div class="box">${pick(STUDY,s,3)}</div>
+        <div class="box">${pick(MONEY,s,5)}</div>
+        <div class="box">${pick(TOTAL,s,7)}</div>`;
+      document.getElementById('result').innerHTML=out;
+    });
+  </script>
+</body>
+</html>
